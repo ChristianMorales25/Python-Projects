@@ -1,0 +1,75 @@
+#Christian A. Morales Jones
+#CIIC3015
+#Prof. Heidy Sierra & Eric Salo
+
+from datetime import datetime
+
+date = datetime.now().strftime("%Y_%m_%d-%I:%M:%S_%p")
+
+accountname = input("Enter Account Name: ")
+
+print("Welcome", accountname.capitalize(), "to Christian's bank account simulator!")
+balance = float(input("Enter Your Starting Balance(We all wish it was that simple): "))
+userchoice = ""
+totalwithdraw = 0
+totalwithvalue = 0
+totaldep = 0
+totaldepvalue = 0
+totalbadwithdraw = 0
+totalbadwithvalue = 0
+totalfees = 0
+totalfeesvalue = 0
+print("")
+
+while userchoice != '3':
+    print("------------------")
+    print("Account:", accountname.capitalize())
+    print("Balance:", balance)
+    print("")
+    print("Please choose one of the following options:")
+    print("1) Deposit")
+    print("2) Withdraw")
+    print("3) Exit")
+    print("------------------")
+    print("")
+    userchoice = input("Select an option: ")
+
+    if userchoice == '1':
+        deposit = float(input("Amount you want to deposit: "))
+        balance += deposit
+        totaldep += 1
+        totaldepvalue += deposit
+        print("")
+
+    if userchoice == '2':
+        withdraw = float(input("Enter amount you want to withdraw: "))
+        if withdraw > balance:
+            print("")
+            print("Insufficient funds, you have been charged an overdraft fee of $5. Just cause we can:).")
+            print("")
+            totalbadwithdraw += 1
+            totalbadwithvalue += withdraw
+            balance -= 5
+            totalfees += 1
+            totalfeesvalue += 5
+        else:
+            balance -= withdraw
+            totalwithdraw += 1
+            totalwithvalue += withdraw
+            print("")
+
+    if userchoice == '3':
+        pass
+
+print("")
+print("Final Statement:", date)
+print("Account:", accountname.capitalize())
+print("Final Balance:", balance)
+print("")
+print(totaldep, "deposits totaling:", totaldepvalue)
+print(totalwithdraw, "Withdraws totaling:", totalwithvalue)
+print(totalbadwithdraw, "Bad withdrawls totaling:", totalbadwithvalue)
+print(totalfees, "Fees totaling:", totalfeesvalue)
+print("")
+print("Thank you", accountname.capitalize(),
+      "for using Christian's bank account simulator! Have a great rest of your day!")
