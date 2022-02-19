@@ -1,0 +1,413 @@
+def Project2():
+
+    CMD_BED = 'b'
+    CMD_CLOSE = 'c'
+    CMD_EAST = 'e'
+    CMD_FEED = 'f'
+    CMD_GET = 'g'
+    CMD_LOCK = 'l'
+    CMD_NORTH = 'n'
+    CMD_OPEN = 'o'
+    CMD_PUT = 'p'
+    CMD_QUIT = 'q'
+    CMD_SOUTH = 's'
+    CMD_TV = 't'
+    CMD_UNLOCK = 'u'
+    CMD_WEST = 'w'
+
+    ROOM_FRONT = 0
+    ROOM_LIVING = 1
+    ROOM_KITCHEN = 2
+    ROOM_OFFICE = 3
+    ROOM_BED = 4
+
+    ROOM_NAMES = ("Front Door", "Living Room", "Kitchen", "Office", "Bedroom")
+
+    flag_me_awake = True
+    flag_tv_on = False
+    pantry_unlocked = False
+    pantry_open = False
+    key_have = False
+    key_in_safe = True
+    bone_have = False
+    stella_fed = False
+    safe_open = False
+    safe_locked = True
+    spam_stored = False
+    spam_have = False
+
+    room = 0
+    turn = 0
+
+    print("What an awful day! You are completely exhausted, all you want to do is climb into bed and collapse. Unfortunately, that is easier said than done…")
+    print()
+    print("CIIC 3015 Autumn 2021 Project 2: Time For Go-To-Bed")
+    print()
+    print("This project/code was done by Christian A. Morales Jones and Carolina Morales")
+
+    while flag_me_awake:
+        print("Location: ", ROOM_NAMES[room])
+        cmd = input("> ")
+        turn += 1
+
+        if cmd == CMD_QUIT:
+            print()
+            print("-""Game Over!")
+            print("-""Turns Played: " + str(turn))
+            print("-"'Thank you for playing "Time For Go-To-Bed".')
+            print()
+            if flag_me_awake == True:
+                return False
+
+        if room == ROOM_FRONT:
+            if cmd == CMD_EAST:
+                print()
+                print("-""You enter your house.")
+                print("-""You enter the living room.")
+                if flag_tv_on == False:
+                    print("-""The TV is off.")
+                if stella_fed == False:
+                    print("-""Stella is here looking hungry and disappointed.")
+                if stella_fed == True:
+                    print("-""Stella is happily chewing on her bone.")
+                print()
+                room = ROOM_LIVING
+                continue
+
+        if room == ROOM_LIVING:
+            if cmd == CMD_TV:
+                if flag_tv_on:
+                    print()
+                    print("You turn off the tv.")
+                    print()
+                else:
+                    print()
+                    print("You turn on the tv.")
+                    print()
+                flag_tv_on = not flag_tv_on
+                continue
+
+            if cmd == CMD_WEST:
+                print("You are way too tired to face the world again just now. Best to remain indoors.")
+                continue
+
+        if room == ROOM_LIVING:
+            if cmd == CMD_SOUTH:
+                print()
+                print("-""You enter the kitchen.")
+                if pantry_open == False:
+                    print("-""The pantry door is closed.")
+                print()
+                room = ROOM_KITCHEN
+                continue
+
+        if room == ROOM_LIVING:
+            if cmd == CMD_FEED:
+                if flag_tv_on == True:
+                    if stella_fed == True:
+                        print()
+                        print("-""You have already fed Stella.")
+                        print()
+                    if bone_have == True and stella_fed == False:
+                        print()
+                        print("-""You have successfully fed Stella, she looks so cute right?")
+                        print()
+                        stella_fed = True
+                if flag_tv_on == False:
+                    print()
+                    print("-""Stella can't eat with all this silence, she need the TV on. Who trained this dog anyways?")
+                    print()
+                continue
+
+        if room == ROOM_LIVING:
+            if cmd == CMD_NORTH:
+                if stella_fed == False:
+                    print()
+                    print("-""Stella refuses to move out of your way.")
+                    print()
+                    room = ROOM_LIVING
+
+
+        if room == ROOM_LIVING:
+            if cmd == CMD_NORTH:
+                if stella_fed == True:
+                    print()
+                    print("-""Stella is happily chewing on her bone and completely ignores you as you walk into the bedroom.")
+                    print()
+                    if spam_stored == False:
+                        print("-""You can see a lovely can of spam. Wait, what's that doing here?")
+                        print()
+                    room = ROOM_BED
+
+
+        if room == ROOM_KITCHEN:
+            if cmd == CMD_UNLOCK:
+                if pantry_unlocked == False:
+                    if key_have == True:
+                        pantry_unlocked = True
+                        print()
+                        print("-""You unlock the pantry door.")
+                        print()
+                    if key_have == False:
+                        print()
+                        print("-""You don't have the key to open the pantry door. You should probably check that big, safe you have in your office.")
+                        print()
+                    continue
+
+        if room == ROOM_KITCHEN:
+            if cmd == CMD_OPEN:
+                if pantry_unlocked == True:
+                    pantry_open = True
+                if pantry_open == True:
+                    print()
+                    print("-""You opened the pantry door.")
+                    print()
+                else:
+                    print()
+                    print("-""You need to unlock the pantry door first.")
+                    print()
+                continue
+
+        if room == ROOM_KITCHEN:
+            if cmd == CMD_GET:
+                if bone_have == True:
+                    print("-""You already have the nice tasty bone.")
+                if pantry_open == True and bone_have == False:
+                    bone_have = True
+                    print()
+                    print("-""You have acquired Stella's tasty bone")
+                    print("-""Stella looks at you anxiously from the living room waiting to be fed.")
+                    print()
+                if pantry_open == False:
+                    print()
+                    print("-""You need to open the pantry door first.")
+                    print()
+                if pantry_unlocked == False:
+                    print()
+                    print("-""You need to unlock the pantry door first.")
+                    print()
+                continue
+
+        if room == ROOM_KITCHEN:
+            if cmd == CMD_CLOSE:
+                if pantry_open == True:
+                    pantry_open = False
+                    print()
+                    print("-""You close the pantry door.")
+                    print()
+                else:
+                    print()
+                    print("-""The pantry door is already closed.")
+                    print()
+                continue
+
+        if room == ROOM_KITCHEN:
+            if cmd == CMD_LOCK:
+                if pantry_unlocked == False:
+                    print()
+                    print("-""The pantry door is already locked.")
+                    print()
+                if pantry_open == False and pantry_unlocked == True:
+                    pantry_unlocked = False
+                    print()
+                    print("-""You lock the pantry door.")
+                    print()
+                if pantry_open == True:
+                    print()
+                    print("-""You can't unlock the door because it is currently open.")
+                    print()
+                continue
+
+        if room == ROOM_KITCHEN:
+            if cmd == CMD_PUT:
+                if spam_have == False and stella_fed == True:
+                    print()
+                    print("-""You don't have the lovely can of spam to store it away here.")
+                    print()
+                if pantry_open == True and pantry_unlocked == True and spam_have == True:
+                    spam_have = False
+                    spam_stored = True
+                    print()
+                    print("-""You have stored away the lovely can of spam in the pantry.")
+                    print()
+                if pantry_open == False:
+                    print()
+                    print("-""You need to open the pantry first before being able to put anything inside of it.")
+                    print()
+                if pantry_unlocked == False:
+                    print()
+                    print("-""You need to unlock the pantry first before being able to put anything inside of it.")
+                    print()
+                continue
+
+        if room == ROOM_KITCHEN:
+            if cmd == CMD_NORTH:
+                print()
+                print("-""You enter the living room.")
+                if flag_tv_on == False:
+                    print("-""The TV is off.")
+                if stella_fed == False:
+                    print("-""Stella is here looking hungry and disappointed.")
+                if stella_fed == True:
+                    print("-""Stella is happily chewing on her bone.")
+                print()
+                room = ROOM_LIVING
+                continue
+
+        if room == ROOM_LIVING:
+            if cmd == CMD_EAST:
+                print()
+                print("-""You enter the office.")
+                if safe_open == False:
+                    print("-""The office safe is closed.")
+                print()
+                room = ROOM_OFFICE
+                continue
+
+        if room == ROOM_OFFICE:
+            if cmd == CMD_OPEN or cmd == CMD_UNLOCK:
+                if safe_open == False and safe_locked == True:
+                    print()
+                    print("-""Please enter the combination to the safe, one number at a time.")
+                    print("-""You remember that it is the next three numbers in the Collatz sequence after 42.")
+                    print()
+                    number_1 = input("First Number? ")
+                    number_2 = input("Second Number? ")
+                    number_3 = input("Third Number? ")
+                    if number_1 == '21' and number_2 == '64' and number_3 == '32':
+                        safe_locked = False
+                        safe_open = True
+                        print()
+                        print("-""You have successfully unlocked the safe.")
+                        if key_in_safe == True:
+                            print("-""Inside you see the pantry door key.")
+                        print()
+                    else:
+                        print()
+                        print("-""Nope that's not it. Think harder.")
+                        print()
+                    continue
+
+        if room == ROOM_OFFICE:
+            if cmd == CMD_GET:
+                if key_have == True:
+                    print()
+                    print("-""You already have the pantry door key.")
+                    print()
+                if safe_open == True and key_in_safe == True and key_have == False:
+                    key_have = True
+                    key_in_safe = False
+                    print()
+                    print("-""You have acquired the pantry door key.")
+                    print()
+                if safe_open == False:
+                    print()
+                    print("-""You need to unlock the safe first.")
+                    print()
+                continue
+
+        if room == ROOM_OFFICE:
+            if cmd == CMD_PUT:
+                if safe_open == True:
+                    if key_have == True:
+                        key_have = False
+                        key_in_safe = True
+                        print()
+                        print("-""You return the pantry door key to the safe.")
+                        print()
+                    continue
+
+        if room == ROOM_OFFICE:
+            if cmd == CMD_CLOSE:
+                if safe_open == True:
+                    safe_open = False
+                    safe_locked = True
+                    print()
+                    print("-""You close the safe door.")
+                    print()
+                else:
+                    print()
+                    print("-""The safe is already closed.")
+                    print()
+                continue
+
+        if room == ROOM_OFFICE:
+            if cmd == CMD_WEST:
+                print()
+                print("-""You enter the living room.")
+                if flag_tv_on == False:
+                    print("-""The TV is off.")
+                if stella_fed == False:
+                    print("-""Stella is here looking hungry and disappointed.")
+                if stella_fed == True:
+                    print("-""Stella is happily chewing on her bone.")
+                print()
+                room = ROOM_LIVING
+                continue
+
+        if room == ROOM_BED:
+            if cmd == CMD_SOUTH:
+                print()
+                print("-""You enter the living room.")
+                if flag_tv_on == False:
+                    print("-""The TV is off.")
+                if stella_fed == False:
+                    print("-""Stella is here looking hungry and disappointed.")
+                if stella_fed == True:
+                    print("-""Stella is happily chewing on her bone.")
+                print()
+                room = ROOM_LIVING
+                continue
+
+        if room == ROOM_BED:
+            if cmd == CMD_GET:
+                if spam_have == True:
+                    print()
+                    print("-""You already have the lovely can of spam.")
+                    print()
+                if spam_have == False:
+                    spam_have = True
+                    print()
+                    print("-""You have acquired the lovely can of spam.")
+                    print()
+                continue
+
+        if room == ROOM_BED:
+            if cmd == CMD_BED and flag_tv_on == True:
+                print("-""You can hear the obnoxious sounds of the TV. I should turn that off or it'll drive me nuts.")
+                continue
+            if cmd == CMD_BED and pantry_open == True:
+                print("-""You keep thinking about the pantry door being open and it's annoying you.")
+                continue
+            if cmd == CMD_BED and pantry_unlocked == True:
+                print("-""You keep thinking about the pantry door not being locked and it's annoying you.")
+                continue
+            if cmd == CMD_BED and key_have == True:
+                print("-""You can feel the pantry door key poking your leg from your pocket.")
+                continue
+            if cmd == CMD_BED and key_in_safe == False:
+                print("-""You can't sleep knowing the pantry door key is not in the safe")
+                continue
+            if cmd == CMD_BED and safe_open == True:
+                print("-""You keep thinking about the safe being open and can't seem to sleep because of it.")
+                continue
+            if cmd == CMD_BED and spam_stored == False:
+                print("-""You keep thinking about how you haven't stored the lovely can of spam.")
+                continue
+
+        if room == ROOM_BED:
+            if cmd == CMD_BED:
+                if flag_tv_on == False and pantry_unlocked == False and pantry_open == False and key_have == False and key_in_safe == True and safe_open == False and safe_locked == True and spam_stored == True and spam_have == False and flag_me_awake == True:
+                    print()
+                    print("-""YOU HAVE WON THE GAME!!")
+                    print("-""Turns Played: " + str(turn))
+                    print("-"'Thank you for playing "Time For Go-To-Bed".')
+                    print()
+                    flag_me_awake = False
+                    continue
+
+    if flag_me_awake == False:
+        return True
+
+
+Project2()
